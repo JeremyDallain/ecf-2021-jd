@@ -28,3 +28,6 @@
 * Les mots de passe sont toujours : ‘password'
 
 * Vu que je te laisse créer ta propre bdd : Normalement les suppressions fonctionnent grace à doctrine, mais si tu as un soucis, n'hesite pas à modifier les relations directement dans la bdd (cascade).
+
+
+## Merci
