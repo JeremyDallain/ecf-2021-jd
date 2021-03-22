@@ -9,10 +9,7 @@
 				{% if app.user %}
 					<li class="nav-item">
 						<a class="nav-link {{ (app.request.attributes.get('_route') == 'app_logout') ? 'active' : '' }}" aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a>				
-					</li>
-					<li class="nav-item">
-						<a class="nav-link {{ (app.request.attributes.get('_route') == 'profile_home') ? 'active' : '' }}" aria-current="page" href="{{ path('profile_home') }}">Mon profil</a>
-					</li>
+					</li>					
 				{% else %}	
 					<li class="nav-item">
 						<a class="nav-link {{ (app.request.attributes.get('_route') == 'app_register') ? 'active' : '' }}" aria-current="page" href="{{ path('app_register') }}">S'inscrire</a>
@@ -25,14 +22,16 @@
 			<br>
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link {{ (app.request.attributes.get('_route') == 'home') ? 'active' : '' }}" aria-current="page" href="{{ path('home') }}">Accueil</a>
+					<a class="nav-link {{ (app.request.attributes.get('_route') == 'home') ? 'active' : '' }}" aria-current="page" href="{{ path('home') }}">Les Évênements</a>
 				</li>
-				{# <li class="nav-item">
-					<a class="nav-link {{ (app.request.attributes.get('_route') == 'article_index') ? 'active' : '' }}" aria-current="page" href="{{ path('article_index') }}">Les articles</a>
-				</li>		
-				<li class="nav-item">
-					<a class="nav-link {{ (app.request.attributes.get('_route') == 'article_new') ? 'active' : '' }}" aria-current="page" href="{{ path('article_new') }}">Créer un article</a>
-				</li>		 #}
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link {{ (app.request.attributes.get('_route') == 'profile_home') ? 'active' : '' }}" aria-current="page" href="{{ path('profile_home') }}">Mon profil</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{ (app.request.attributes.get('_route') == 'event_new') ? 'active' : '' }}" aria-current="page" href="{{ path('event_new') }}">Créer un évênement</a>
+					</li>	
+				{% endif %}	
 			</ul>
 		</div>
 	</div>

@@ -49,12 +49,12 @@ class User implements UserInterface
     private $pseudo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user", cascade={"remove"})
      */
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", cascade={"remove"})
      */
     private $comments;
 

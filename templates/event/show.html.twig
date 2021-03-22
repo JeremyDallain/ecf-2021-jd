@@ -9,30 +9,40 @@
 
     <div class="card my-5">
         <div class="card-body">
-            <h3 class="card-title text-center">Évênements n°{{ event.id }} : {{ event.title }}</h3>
-            <h6 class="card-subtitle mb-2 text-muted text-center">Aura lieu le {{ event.startedAt | date('d/m/Y') }} à {{ event.startedAt | date('H') }}h{{ event.startedAt | date('i') }}</h6>
+            <h3 class="card-title">{{ event.title }}</h3>
+            <em class="card-subtitle mb-2 text-muted">Aura lieu le {{ event.startedAt | date('d/m/Y') }} à {{ event.startedAt | date('H') }}h{{ event.startedAt | date('i') }}</em>
             <p>publié par {{ event.user.pseudo }}</p>
-            <p>Localisation</p>
             <img src="{{ asset('/uploads/' ~ event.picture) }}" alt="{{ event.title }}">
             <p>
                 {{ event. description | raw }}
-            </p>             
-            <h3>Commentaires ({{ event.comments | length }})</h3> 
+            </p>   
+            <hr>          
+            <h5 class="text-center">Commentaires ({{ event.comments | length }})</h5> 
             {% if app.user %}          
                 {% for comment in event.comments %}
-                    <p>De {{ comment.user.pseudo }}</p>
+                <div class="border p-2">
+                    {% if comment.user.id == app.user.id %}                        
+                        <p><strong>De Vous <a class="btn btn-sm btn-danger" href="{{ path('comment_delete', {'id': comment.id}) }}"><i class="far fa-trash-alt"></i></a></strong></p>
+                    {% else %}
+                        <p>De {{ comment.user.pseudo }}</p>
+                    {% endif %}
                     <p><q>{{ comment.content }}</q></p>
-                    <p>publié le {{ comment.createdAt | date('d/m/Y')}} à {{ comment.createdAt | date('H:i')}}</p>
+                    <p><em>publié le {{ comment.createdAt | date('d/m/Y')}} à {{ comment.createdAt | date('H:i')}}</em></p>
+                </div>
+                   
                 {% else %}
                     <p>aucun commentaire</p>  
                 {% endfor %}
-                {{ form_start(form) }}
-                {{ form_row(form.content) }}       
-                {{ form_errors(form) }}                    
-                    <button type="submit" class="btn btn-success">
-                        Poster
-                    </button>                        
-                {{ form_end(form) }}
+                <div class="mt-2">
+                    {{ form_start(form) }}
+                    {{ form_row(form.content) }}       
+                    {{ form_errors(form) }}                    
+                        <button type="submit" class="btn btn-success mt-2">
+                            Poster
+                        </button>                        
+                    {{ form_end(form) }}
+                </div>
+                
             {% else %}
                 <p><a href="{{ path('app_login') }}">Connectez-vous</a> pour voir ou publier des commentaires</p>
             {% endif %}

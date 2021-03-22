@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\Comment;
 use App\Form\EventType;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +19,11 @@ class EventController extends AbstractController
 {
 
     protected $em;
+
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
     }
+
     /**
      * @Route("/", name="home")
      */
@@ -29,7 +32,6 @@ class EventController extends AbstractController
 
         $events = $eventRepository->findBy([], ['startedAt' => 'ASC']);
 
-        // dd($events);
         return $this->render('event/index.html.twig', [
             'events' => $events
         ]);
@@ -111,7 +113,7 @@ class EventController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', 'Évênement créé avec succés.');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('profile_home');
         }
 
         return $this->render('event/new.html.twig', [
@@ -133,6 +135,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        // Gestion des droits (à la place du Voter, me permet de renvoyer un message plus facilement)
         if ($event->getUser() !== $this->getUser()) {
             $this->addFlash('danger', "Vous n'etes pas le proprietaire de cet évênement, vous ne pouvez pas le modifier !");
             return $this->redirectToRoute('home');
@@ -161,7 +164,7 @@ class EventController extends AbstractController
 
             $this->em->flush();
             $this->addFlash('success', 'Évênement modifié avec succés.');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('profile_home');
         }
 
         return $this->render('event/edit.html.twig', [
@@ -183,6 +186,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        // Gestion des droits (à la place du Voter, me permet de renvoyer un message plus facilement)
         if ($event->getUser() !== $this->getUser()) {
             $this->addFlash('danger', "Vous n'êtes pas le proprietaire de cet évênement, vous ne pouvez pas le supprimer !");
             return $this->redirectToRoute('home');
@@ -193,9 +197,31 @@ class EventController extends AbstractController
             $this->em->flush();
             $this->addFlash('success', 'Évênement supprimé avec succés.');
         } else {
-            $this->addFlash('danger', "Suppression de l'article impossible.");
+            $this->addFlash('danger', "Suppression de l'évênement impossible.");
         }
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('profile_home');
+    }
+
+    /**
+     * @Route("/comment/{id}/delete", name="comment_delete")
+     */
+    public function delete_comment($id, CommentRepository $commentRepository)
+    {
+        $comment = $commentRepository->find($id);
+        
+        // Gestion des droits (à la place du Voter, me permet de renvoyer un message plus facilement)
+        if ($comment->getUser() !== $this->getUser()) {
+            $this->addFlash('danger', "Vous n'êtes pas le proprietaire de ce commentaire, vous ne pouvez pas le supprimer !");
+            return $this->redirectToRoute('home');
+        }
+
+        $this->em->remove($comment);
+        $this->em->flush();
+
+        $this->addFlash('success', "Commentaire supprimé.");
+        return $this->redirectToRoute('event_show', [
+            'id' => $comment->getEvent()->getId()
+        ]);
     }
 }

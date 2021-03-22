@@ -26,8 +26,7 @@ class EventType extends AbstractType
             ->add('startedAt', DateTimeType::class, [
                 'label' => "Date et heure de l'évênement",
                 'date_widget'=> 'single_text',
-                'time_widget'=> 'single_text',
-                'required' => false
+                'time_widget'=> 'single_text'
             ])
             ->add('description', CKEditorType::class, [
                 'label' => "Description de l'évênement",

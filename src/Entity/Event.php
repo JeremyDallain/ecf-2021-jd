@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
@@ -21,16 +22,21 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message = "Le titre est obligatoire.")
+     * @Assert\Length(min=6, max=180, minMessage="Le titre doit faire au moins 6 caractères", maxMessage="Le titre doit faire moins de 180 caractères")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message = "La description est obligatoire.")
+     * @Assert\Length(min=10, minMessage="Le login doit faire au moins 10 caractères")
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message = "La date est obligatoire.")
      */
     private $startedAt;
 
@@ -45,7 +51,7 @@ class Event
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="event")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="event", cascade={"remove"})
      */
     private $comments;
 
@@ -64,7 +70,7 @@ class Event
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -76,7 +82,7 @@ class Event
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -100,7 +106,7 @@ class Event
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 
