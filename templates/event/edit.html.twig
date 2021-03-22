@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un évênement{% endblock %}
+
+{% block body %}
+    <h1>Modifier l'évênement</h1>
+
+    <a class="btn btn-success mb-3" href="{{ path('home') }}">Revenir à la liste des évênements</a>
+
+    {{ include('event/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+{% endblock %}
+

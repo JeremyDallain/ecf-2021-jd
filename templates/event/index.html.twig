@@ -1,8 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Les évênements{% endblock %}
 
 {% block body %}
-    <h1>Accueil</h1>
-    <p>events</p>
+    <h1>Les évênements</h1>
+
+    <a class="btn btn-success w-100" href="{{ path('event_new') }}">Créer un évênements</a>
+
+    
+    
+    {% for event in events %}
+        <div class="card my-5">
+            <div class="card-body">
+                <h3 class="card-title text-center">Évênements n°{{ event.id }} : {{ event.title }}</h3>
+                <h6 class="card-subtitle mb-2 text-muted text-center">Aura lieu le {{ event.startedAt | date('d/m/Y') }} à {{ event.startedAt | date('H') }}h{{ event.startedAt | date('i') }}</h6>
+                <p>publié par {{ event.user.pseudo }}</p>
+                <p>Localisation</p>
+                <div>
+                    <a class="btn btn-primary mb-4" href="{{ path('event_show', {'id': event.id}) }}"><i class="far fa-eye"></i> Détail</a>
+                </div>         
+                <p>nb de commentaires : {{ event.comments | length }}</p>       
+            </div>
+        </div>   
+    {% else %}
+        <p>Pas d'évênements</p>
+    {% endfor %}
+    
 {% endblock %}

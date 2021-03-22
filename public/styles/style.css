@@ -10,3 +10,8 @@ h2 {
 body {
     font-family: 'Raleway', sans-serif;
 }
+
+img {
+    display: block;
+    width: 200px;
+}

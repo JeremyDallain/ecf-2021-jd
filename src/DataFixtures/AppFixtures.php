@@ -45,7 +45,7 @@ class AppFixtures extends Fixture
                 $event->setTitle($faker->department())
                     ->setDescription($faker->paragraphs(5, true))
                     ->setStartedAt($faker->dateTimeBetween('+1 month', '+2 month'))
-                    ->setPicture('image_defaut.jpg')
+                    ->setPicture('image_default.jpg')
                     ->setUser($user);                
                 $manager->persist($event);
 

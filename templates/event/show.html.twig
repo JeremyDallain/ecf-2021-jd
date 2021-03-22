@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Évênements : {{ event.title }}{% endblock %}
+
+{% block body %}
+    <h1>Page de l'Évênements : {{ event.title }}</h1>
+
+    <a class="btn btn-success" href="{{ path('home') }}">Revenir à la liste des évênements</a>
+
+    <div class="card my-5">
+        <div class="card-body">
+            <h3 class="card-title text-center">Évênements n°{{ event.id }} : {{ event.title }}</h3>
+            <h6 class="card-subtitle mb-2 text-muted text-center">Aura lieu le {{ event.startedAt | date('d/m/Y') }} à {{ event.startedAt | date('H') }}h{{ event.startedAt | date('i') }}</h6>
+            <p>publié par {{ event.user.pseudo }}</p>
+            <p>Localisation</p>
+            <img src="{{ asset('/uploads/' ~ event.picture) }}" alt="{{ event.title }}">
+            <p>
+                {{ event. description | raw }}
+            </p>             
+            <h3>Commentaires ({{ event.comments | length }})</h3> 
+            {% if app.user %}          
+                {% for comment in event.comments %}
+                    <p>De {{ comment.user.pseudo }}</p>
+                    <p><q>{{ comment.content }}</q></p>
+                    <p>publié le {{ comment.createdAt | date('d/m/Y')}} à {{ comment.createdAt | date('H:i')}}</p>
+                {% else %}
+                    <p>aucun commentaire</p>  
+                {% endfor %}
+                <form action="">
+                    
+                </form>
+            {% else %}
+                <p>Connectez-vous pour voir ou publier des commentaires <a href="{{ path('app_login') }}">ici</a></p>
+            {% endif %}
+
+                
+        </div>
+    </div>      
+{% endblock %}
