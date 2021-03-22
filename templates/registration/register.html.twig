@@ -9,12 +9,18 @@
 
     <h1>Inscription</h1>
 
-    {{ form_start(registrationForm) }}
+    {{ form_start(registrationForm, {'attr': {'id': 'form_register' }}) }}
         {{ form_row(registrationForm.login) }}
         {{ form_row(registrationForm.pseudo) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Mot de Passe'
         }) }}
+        <ul style="list-style: none;">
+            <li>Le mot de passe doit faire au moins 8 caractères <i id="pass_length_valid" class="far fa-check-circle fa-lg d-none text-success"></i></li>
+            <li>Le mot de passe doit contenir au moins une majuscule <i id="pass_maj_valid" class="far fa-check-circle fa-lg d-none text-success"></i></li>
+            <li>Le mot de passe doit contenir au moins une minuscule <i id="pass_min_valid" class="far fa-check-circle fa-lg d-none text-success"></i></li>
+            <li>Le mot de passe doit contenir au moins un chiffre <i id="pass_number_valid" class="far fa-check-circle fa-lg d-none text-success"></i></li>
+        </ul>
         {# {{ form_row(registrationForm.agreeTerms) }} #}
         <br>
         <a href="{{ path('app_login') }}">Déjà inscrit ? Connectez-vous.</a>
@@ -22,4 +28,9 @@
         <br>
         <button type="submit" class="btn btn-lg btn-primary">S'inscrire</button>
     {{ form_end(registrationForm) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('scripts/verifPass.js') }}"></script>
 {% endblock %}
