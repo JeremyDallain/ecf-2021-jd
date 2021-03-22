@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Évênements : {{ event.title }}{% endblock %}
+{% block title %}Évênement : {{ event.title }}{% endblock %}
 
 {% block body %}
-    <h1>Page de l'Évênements : {{ event.title }}</h1>
+    <h1>Page de l'Évênement : {{ event.title }}</h1>
 
     <a class="btn btn-success" href="{{ path('home') }}">Revenir à la liste des évênements</a>
 
@@ -12,7 +12,9 @@
             <h3 class="card-title">{{ event.title }}</h3>
             <em class="card-subtitle mb-2 text-muted">Aura lieu le {{ event.startedAt | date('d/m/Y') }} à {{ event.startedAt | date('H') }}h{{ event.startedAt | date('i') }}</em>
             <p>publié par {{ event.user.pseudo }}</p>
-            <img src="{{ asset('/uploads/' ~ event.picture) }}" alt="{{ event.title }}">
+            <div class="mb-3">            
+                <img src="{{ asset('/uploads/' ~ event.picture) }}" alt="{{ event.title }}">
+            </div>
             <p>
                 {{ event. description | raw }}
             </p>   
@@ -22,9 +24,9 @@
                 {% for comment in event.comments %}
                 <div class="border p-2">
                     {% if comment.user.id == app.user.id %}                        
-                        <p><strong>De Vous <a class="btn btn-sm btn-danger" href="{{ path('comment_delete', {'id': comment.id}) }}"><i class="far fa-trash-alt"></i></a></strong></p>
+                        <p>De <strong>Vous <a class="btn btn-sm btn-danger" href="{{ path('comment_delete', {'id': comment.id}) }}"><i class="far fa-trash-alt"></i></a></strong></p>
                     {% else %}
-                        <p>De {{ comment.user.pseudo }}</p>
+                        <p>De <strong>{{ comment.user.pseudo }}</strong></p>
                     {% endif %}
                     <p><q>{{ comment.content }}</q></p>
                     <p><em>publié le {{ comment.createdAt | date('d/m/Y')}} à {{ comment.createdAt | date('H:i')}}</em></p>

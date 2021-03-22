@@ -23,7 +23,7 @@
     {% for event in app.user.events %}
         <div class="card my-5">
             <div class="card-body">
-                <h3 class="card-title">Évênements n°{{ event.id }} : {{ event.title }}</h3>
+                <h3 class="card-title">{{ event.title }}</h3>
                 <h6 class="card-subtitle mb-2 text-muted">Aura lieu le {{ event.startedAt | date('d/m/Y') }} à {{ event.startedAt | date('H') }}h{{ event.startedAt | date('i') }}</h6>
                 <p>publié par {{ event.user.pseudo }}</p>
                 <div>
