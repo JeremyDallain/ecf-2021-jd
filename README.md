@@ -25,6 +25,4 @@
 
 ### à savoir :
 
-* Les mots de passe sont toujours : ‘password’
-
-* Les redirections vers pages 404, 403 fonctionnent en mode production
+* Les mots de passe sont toujours : ‘password'
