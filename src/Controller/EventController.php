@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Event;
+use App\Entity\Comment;
 use App\Form\EventType;
+use App\Form\CommentType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,21 +36,39 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="event_show", methods={"GET"})
+     * @Route("/show/{id}", name="event_show")
      */
-    public function show($id, EventRepository $eventRepository)
+    public function show($id, EventRepository $eventRepository, Request $request)
     {
         $event = $eventRepository->find($id);
-
-        // dd($event);
 
         if (!$event) {
             $this->addFlash('danger', "L'évênement demandé n'existe pas.");
             return $this->redirectToRoute('home');
         }
 
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $comment->setUser($this->getUser())
+                ->setEvent($event)
+                ->setCreatedAt(new DateTime);
+
+            $this->em->persist($comment);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Votre commentaire a été soumis avec succés');
+            return $this->redirectToRoute('event_show', [
+                'id' => $id
+            ]);
+        }
+
         return $this->render('event/show.html.twig', [
             'event' => $event,
+            'form' => $form->createView()
         ]);
     }
 
@@ -176,14 +197,5 @@ class EventController extends AbstractController
         }
 
         return $this->redirectToRoute('home');
-    }
-
-    /**
-     * @Route("/comment/{id}", name="event_comment")
-     * @IsGranted("ROLE_USER")
-     */
-    public function comment()
-    {
-        return $this->render('event/comment.html.twig');
     }
 }

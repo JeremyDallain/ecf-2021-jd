@@ -15,4 +15,27 @@
     <div>
         {{ include('profile/_delete_form.html.twig') }}
     </div>
+    <br>
+    <hr>
+    <br>
+    <h2>Mes Évênements</h2>
+    <a class="btn btn-success w-100" href="{{ path('event_new') }}">Créer un évênements</a>
+    {% for event in app.user.events %}
+        <div class="card my-5">
+            <div class="card-body">
+                <h3 class="card-title text-center">Évênements n°{{ event.id }} : {{ event.title }}</h3>
+                <h6 class="card-subtitle mb-2 text-muted text-center">Aura lieu le {{ event.startedAt | date('d/m/Y') }} à {{ event.startedAt | date('H') }}h{{ event.startedAt | date('i') }}</h6>
+                <p>publié par {{ event.user.pseudo }}</p>
+                <p>Localisation</p>
+                <div>
+                    <a class="btn btn-primary mb-4" href="{{ path('event_show', {'id': event.id}) }}"><i class="far fa-eye"></i> Détail</a>
+                    <a class="btn btn-warning mb-4" href="{{ path('event_edit', {'id': event.id}) }}"><i class="far fa-edit"></i> Modifier</a>
+                    {{ include('event/_delete_form.html.twig') }}
+                </div>         
+                <p>nb de commentaires : {{ event.comments | length }}</p>       
+            </div>
+        </div>
+    {% else %}
+        <p>Vous n'avez créé aucun évênement</p>
+    {% endfor %}
 {% endblock %}

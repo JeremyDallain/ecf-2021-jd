@@ -1,4 +1,36 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Créer') }}</button>
+    <div class="mb-3">    
+        {{ form_row(form.title) }}     
+    </div>
+    <div class="mb-3">  
+        {% if app.request.attributes.get('_route') == 'event_new' %}    
+            {{ form_row(form.startedAt) }}      
+        {% else %}
+            {{ form_row(form.startedAt, {
+                'attr': {
+                    'hidden': true            
+                },
+                'label': false
+            }) }}  
+            <p class="my-4"><strong>L'évênement aura lieu le {{ event.startedAt | date('d/m/Y') }} à {{ event.startedAt | date('H') }}h{{ event.startedAt | date('i') }} (non modifiable)</strong></p>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">  
+        {{ form_row(form.description) }}    
+    </div>
+    <div class="mb-3">     
+        {{ form_row(form.picture) }}     
+        
+    </div>
+    <div class="mb-3">
+        {% if app.request.attributes.get('_route') == 'event_edit' %}
+            <p>Image actuelle</p>
+            <img src="{{ asset('/uploads/' ~ event.picture) }}" alt="{{ event.title }}">
+        {% endif %}  
+    </div>
+    {{ form_errors(form) }}  
+    <div class="mb-3">  
+        <button class="btn btn-primary">{{ button_label|default('Créer') }}</button>
+    </div>
 {{ form_end(form) }}

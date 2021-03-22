@@ -4,11 +4,7 @@
 
 {% block body %}
     <h1>Les évênements</h1>
-
-    <a class="btn btn-success w-100" href="{{ path('event_new') }}">Créer un évênements</a>
-
-    
-    
+  
     {% for event in events %}
         <div class="card my-5">
             <div class="card-body">

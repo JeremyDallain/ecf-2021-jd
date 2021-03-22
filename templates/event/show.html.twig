@@ -26,11 +26,15 @@
                 {% else %}
                     <p>aucun commentaire</p>  
                 {% endfor %}
-                <form action="">
-                    
-                </form>
+                {{ form_start(form) }}
+                {{ form_row(form.content) }}       
+                {{ form_errors(form) }}                    
+                    <button type="submit" class="btn btn-success">
+                        Poster
+                    </button>                        
+                {{ form_end(form) }}
             {% else %}
-                <p>Connectez-vous pour voir ou publier des commentaires <a href="{{ path('app_login') }}">ici</a></p>
+                <p><a href="{{ path('app_login') }}">Connectez-vous</a> pour voir ou publier des commentaires</p>
             {% endif %}
 
                 
