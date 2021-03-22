@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil Utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Mon profil</h1>
+    <p>Login : {{ app.user.login }}</p>
+    <p>Pseudo : {{ app.user.pseudo }}</p>
+    <div class="mb-2">
+        <a href="{{ path('profile_edit_infos') }}" class="btn btn-primary"><i class="fas fa-user-edit"></i> Modifier mon profil</a>
+    </div>
+    <div class="mb-2">
+        <a href="{{ path('profile_edit_pass') }}" class="btn btn-primary"><i class="fas fa-user-edit"></i> Modifier mon mot de passe</a>    
+    </div>
+    <div>
+        {{ include('profile/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
