@@ -21,7 +21,7 @@ class RegistrationController extends AbstractController
     {
         if ($this->getUser()) {
             $this->addFlash('secondary', 'Vous êtes déjà connecté en tant que : '.$this->getUser()->getLogin());
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('home');
         }
 
         $user = new User();
@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
                 $user,
                 $request,
                 $authenticator,
-                'main' // firewall name in security.yaml
+                'home' // firewall name in security.yaml
             );
         }
 

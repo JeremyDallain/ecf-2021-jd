@@ -116,6 +116,6 @@ class ProfileController extends AbstractController
             $this->addFlash('success', "Vous avez bien supprimé votre propre compte");
         }
 
-        return $this->redirectToRoute('main');
+        return $this->redirectToRoute('home');
     }
 }

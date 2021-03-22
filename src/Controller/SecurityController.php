@@ -16,7 +16,7 @@ class SecurityController extends AbstractController
     {
         if ($this->getUser()) {
             $this->addFlash('secondary', 'Vous êtes déjà connecté en tant que : '.$this->getUser()->getLogin());
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('home');
         }
 
         // get the login error if there is one
@@ -41,6 +41,6 @@ class SecurityController extends AbstractController
     public function logoutAction()
     {
         $this->addFlash('secondary', 'Vous êtes déconnecté !');
-        return $this->redirectToRoute('main');
+        return $this->redirectToRoute('home');
     }
 }

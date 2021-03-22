@@ -103,7 +103,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
         $flashBag = $request->getSession()->getBag('flashes');
         $flashBag->add('success', 'Vous êtes connecté !');
 
-        return new RedirectResponse($this->urlGenerator->generate('main'));
+        return new RedirectResponse($this->urlGenerator->generate('home'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

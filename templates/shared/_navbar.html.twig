@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">Agenda</a>
+		<a class="navbar-brand" href="{{ path('home') }}">Agenda</a>
 		<button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -10,9 +10,9 @@
 					<li class="nav-item">
 						<a class="nav-link {{ (app.request.attributes.get('_route') == 'app_logout') ? 'active' : '' }}" aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a>				
 					</li>
-					{# <li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link {{ (app.request.attributes.get('_route') == 'profile_home') ? 'active' : '' }}" aria-current="page" href="{{ path('profile_home') }}">Mon profil</a>
-					</li> #}
+					</li>
 				{% else %}	
 					<li class="nav-item">
 						<a class="nav-link {{ (app.request.attributes.get('_route') == 'app_register') ? 'active' : '' }}" aria-current="page" href="{{ path('app_register') }}">S'inscrire</a>
@@ -25,7 +25,7 @@
 			<br>
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link {{ (app.request.attributes.get('_route') == 'main') ? 'active' : '' }}" aria-current="page" href="{{ path('main') }}">Accueil</a>
+					<a class="nav-link {{ (app.request.attributes.get('_route') == 'home') ? 'active' : '' }}" aria-current="page" href="{{ path('home') }}">Accueil</a>
 				</li>
 				{# <li class="nav-item">
 					<a class="nav-link {{ (app.request.attributes.get('_route') == 'article_index') ? 'active' : '' }}" aria-current="page" href="{{ path('article_index') }}">Les articles</a>
